@@ -35,6 +35,8 @@ namespace ConsoleApp5
             return false;
 
         }
+
+        
         public static bool IsExist<T>(Queue<T> q,T x)
         {
             Queue<T> temp = new Queue<T>();
@@ -74,30 +76,36 @@ namespace ConsoleApp5
             }
             return count; 
         }
-
-        ///// <summary>
-        ///// קוד לא תקין לפעם הבאה
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <param name="q"></param>
-        ///// <returns></returns>
-        //public static int CountQRecursive<T>(Queue<T> q)
-        //{
-        //    Queue<T> temp=new Queue<T>();
-            
-        //    if(q.IsEmpty()) return 0;
-        //    temp.Insert(q.Remove());
-        //    int count = 1 + CountQRecursive(q);
-        //    q.Insert(temp.Remove());
-        //    return count;
-
-           
-
-
-
-            
+        public static int CountQRecursive<T>(Queue<T> q)
+        {
+            return CountQRecursive(q,new Queue<T>());
         }
-        static void Main(string[] args)
+        /// <summary>
+        /// קוד לא תקין לפעם הבאה
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="q"></param>
+        /// <returns></returns>
+
+        public static int CountQRecursive<T>(Queue<T> q,Queue<T> temp)
+        {
+           // Queue<T> temp = new Queue<T>();
+
+            //תנאי עצירה
+            if (q.IsEmpty()) return 0;
+           //יש איברים בתור
+            temp.Insert(q.Remove());
+            int count = 1 + CountQRecursive(q,temp);
+            q.Insert(temp.Remove());
+            return count;
+
+
+
+
+
+
+
+            static void Main(string[] args)
         {
             Queue<int> q1 = new Queue<int>();
             q1.Insert(7);
