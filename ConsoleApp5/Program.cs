@@ -81,7 +81,7 @@ namespace ConsoleApp5
             return CountQRecursive(q,new Queue<T>());
         }
         /// <summary>
-        /// קוד לא תקין לפעם הבאה
+        /// קוד  תקין לפעם הבאה
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="q"></param>
