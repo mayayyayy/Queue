@@ -1,9 +1,9 @@
 ﻿using System;
-//using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataStructure;
+//using DataStructure;
 
 namespace ConsoleApp5
 {
@@ -124,21 +124,105 @@ namespace ConsoleApp5
 
         }
 
+        public static Queue<int> ReverseQ(Queue<int> qu, Queue<int> newq)
+        {
+            int x = qu.Remove();
+            if (qu.IsEmpty())
+            {
+                newq.Insert(x);
+                return newq;
+            }
+            newq = ReverseQ(qu, newq);
+            newq.Insert(x);
+            return newq;
+        }
+
+        public static void EvenNumsAtTheEnd(Queue<int> que, int n)
+        {
+            int x;
+            if (n>0)
+            {
+                x = que.Remove();
+                if (x % 2 == 1) que.Insert(x);
+                EvenNumsAtTheEnd(que, n - 1);
+                if(x%2==0) que.Insert(x);   
+
+            }
+        }
+
+        public static int MaxNumInQ(Queue<int> q)
+        {
+            Queue<int> copyQ = new Queue<int>();
+            int max = int.MinValue;
+            while (!q.IsEmpty())
+            {
+                int x = q.Remove();
+                if (x > max) max = x;
+                copyQ.Insert(q.Remove());   
+            }
+            while (!copyQ.IsEmpty())
+            {
+                q.Insert(copyQ.Remove());
+            }
+            return max;
+        }
+
+        public static void Add5(Queue<int> q)
+        {
+            Queue<int> copyQ = new Queue<int>();
+            while (!q.IsEmpty())
+            {
+                int x = q.Remove();
+                if (x < 10)
+                {
+                    x += 5;
+                }
+                copyQ.Insert(x);
+            }
+            while (!copyQ.IsEmpty())
+            {
+                q.Insert(copyQ.Remove());
+            }
+        }
+
+        public static bool IsSorted(Queue<int> q)
+        {
+            bool b = true;
+            Queue<int> copyQ = new Queue<int>(); //DONT FORGET COPY
+            while (!q.IsEmpty())
+            {
+                int x = q.Remove();
+                if (x > q.Head())
+                {
+                    b = false; //CANT RETURN Q IN THE MIDDLE 
+                }
+                copyQ.Insert(x);
+            }
+            while (!copyQ.IsEmpty())
+            {
+                q.Insert(copyQ.Remove());
+            }
+            return b;
+        }
+
+
+
+
+
         static void Main(string[] args)
         {
             Queue<int> q1 = new Queue<int>();
+            q1.Insert(2);
+            q1.Insert(6);
             q1.Insert(7);
-            q1.Insert(8);
-            q1.Insert(9);
-            q1.Insert(1);
-            Console.WriteLine(q1);
-            //Console.WriteLine(IsExist(q1,9));
-            Console.WriteLine(IsExistsRecursive(q1,1));
-            Console.WriteLine(q1);
-            //int count = CountQ(q1);
-            //Console.WriteLine(count);
+            q1.Insert(5);
+            Queue<int> q2 = new Queue<int>();
+            //Console.WriteLine(ReverseQ(q1,q2));
+            //EvenNumsAtTheEnd(q1, 5);
             //Console.WriteLine(q1);
-            Console.ReadKey();
+            Console.WriteLine(MaxNumInQ(q1));
+            
+            
 
         }
     }
