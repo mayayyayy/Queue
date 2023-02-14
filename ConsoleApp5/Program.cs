@@ -139,13 +139,13 @@ namespace ConsoleApp5
 
         public static void EvenNumsAtTheEnd(Queue<int> que, int n)
         {
-            int x;
+            int x; 
             if (n>0)
             {
                 x = que.Remove();
                 if (x % 2 == 1) que.Insert(x);
-                EvenNumsAtTheEnd(que, n - 1);
-                if(x%2==0) que.Insert(x);   
+                EvenNumsAtTheEnd(que, n - 1); // O(n) n being length of q
+                if (x%2==0) que.Insert(x);   
 
             }
         }
@@ -170,7 +170,7 @@ namespace ConsoleApp5
         public static void Add5(Queue<int> q)
         {
             Queue<int> copyQ = new Queue<int>();
-            while (!q.IsEmpty())
+            while (!q.IsEmpty()) // O(2n) n being length of q
             {
                 int x = q.Remove();
                 if (x < 10)
@@ -189,9 +189,10 @@ namespace ConsoleApp5
         {
             bool b = true;
             Queue<int> copyQ = new Queue<int>(); //DONT FORGET COPY
-            while (!q.IsEmpty())
+            while (!q.IsEmpty()) // 2*O(n) n being length of q
             {
                 int x = q.Remove();
+                if (q.IsEmpty()) b = true;
                 if (x > q.Head())
                 {
                     b = false; //CANT RETURN Q IN THE MIDDLE 
@@ -203,6 +204,42 @@ namespace ConsoleApp5
                 q.Insert(copyQ.Remove());
             }
             return b;
+        }
+
+        public static bool IsZigZag(Queue<int> originalQ) // a
+        {
+            bool b = true;
+            Queue<int> copyQ = new Queue<int>();
+            while (!originalQ.IsEmpty()) // 2*O(n) n being length of originalQ
+            {
+                int x = originalQ.Remove(); //9
+                int y = originalQ.Remove(); //5
+                if (!(x>y && originalQ.Head() > y)) // cant get to one after head. must remove it 
+                {
+                    b = false;
+                }
+                copyQ.Insert(x);
+                copyQ.Insert(y);
+            }
+            while (!copyQ.IsEmpty())
+            {
+                originalQ.Insert(copyQ.Remove());
+            }
+            return b;
+        }
+        public static Node<Queue<int>> RemoveZigZagsFromNodeList(Node<Queue<int>> node) //b
+        {
+            Node<Queue<int>> node1;
+            while (node.HasNext() && node!=null) // O(n*m) n being length of node list, m being length of quees in nodes
+            {
+                if (IsZigZag(node.GetNext().GetValue()))
+                {
+                    node1 = node.GetNext();  //pointer as a node bruh
+                    node.SetNext(node.GetNext().GetNext());
+                    node1.SetNext(null); 
+                }
+            }
+            return node;
         }
 
 
